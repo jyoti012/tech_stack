@@ -13,3 +13,13 @@ The navigation prop is available to all screen components (components defined as
 push: we add a new route to the navigation stack. When you call navigate it first tries to find an existing route with that name, and only pushes a new route if there isn't yet one on the stack.
 
 The header provided by stack navigator will automatically include a back button when it is possible to go back from the active screen
+
+A screen component can have a static property called navigationOptions which is either an object or a function that returns an object that contains various configuration options. The one we use for the header title is title, as demonstrated in the following example.
+
+class HomeScreen extends React.Component {
+  static navigationOptions = {
+    title: 'Home',
+  };
+
+  /* render function, etc */
+}

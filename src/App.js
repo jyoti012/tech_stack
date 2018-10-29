@@ -3,6 +3,20 @@ import { View, Text, TouchableOpacity } from 'react-native';
 import { createStackNavigator, StackActions, NavigationActions } from 'react-navigation'; // Version can be specified in package.json
 
 class App extends React.Component {
+
+  static navigationOptions = ({ navigation }) => {
+    return {
+      title: navigation.getParam('otherParam', 'Home'),
+      headerStyle: {
+        backgroundColor: '#f4511e',
+      },
+      headerTintColor: '#fff',
+      headerTitleStyle: {
+        fontWeight: 'bold',
+      },
+    };
+  };
+
   render() {
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
@@ -10,6 +24,7 @@ class App extends React.Component {
         <TouchableOpacity onPress={() => { this.props.navigation.push('Details', 
           {
             itemId: Math.floor(Math.random() * 100),
+            title: 'Details',
             otherParam: 'Lorem Ipsum',
           }) 
         }} >
@@ -28,6 +43,18 @@ class App extends React.Component {
 }
 
 class DetailsScreen extends React.Component {
+  static navigationOptions = ({ navigation }) => {
+    return {
+      title: navigation.getParam('title', 'Details page'),
+      headerStyle: {
+        backgroundColor: '#f4511e',
+      },
+      headerTintColor: '#fff',
+      headerTitleStyle: {
+        fontWeight: 'bold',
+      },
+    };
+  };
   render() {
     const { navigation } = this.props;
     const itemId = navigation.getParam('itemId', 'No-ID');
