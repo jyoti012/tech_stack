@@ -1,15 +1,15 @@
 import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
-import { createStackNavigator, StackActions, NavigationActions } from 'react-navigation'; // Version can be specified in package.json
+import { createStackNavigator, StackActions, NavigationActions, StackNavigator } from 'react-navigation'; // Version can be specified in package.json
 
-class App extends React.Component {
+class HomeScreen extends React.Component {
 
   static navigationOptions = ({ navigation }) => {
     return {
       title: navigation.getParam('otherParam', 'Home'),
       headerRight: (
         <TouchableOpacity
-          onPress={() => alert('Contact you soon')}
+          onPress={() => navigation.navigate('MyModal')}
           style={{ height: 50, width: 100, textAlign: 'center', borderRadius: 5  }} >
           <Text style={{ paddingTop: 15, paddingBottom: 10, alignSelf: 'center', color: '#fff', }}>Help</Text>
         </TouchableOpacity>
@@ -41,6 +41,28 @@ class App extends React.Component {
     );
   }  
 }
+
+class ModalScreen extends React.Component {
+  render() {
+    return (
+      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+        <Text style={{ fontSize: 30 }}>This is a modal!</Text>
+        <TouchableOpacity
+        onPress={() => { this.props.navigation.navigate('Home') }}>
+        <Text style={{ 
+          borderWidth: 1, 
+          height: 50, 
+          width: 100,
+          paddingTop: 18, 
+          textAlign: 'center' }}>
+          Go Back
+        </Text>
+      </TouchableOpacity>
+      </View>
+    );
+  }
+}
+
 
 class DetailsScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
@@ -75,9 +97,9 @@ class DetailsScreen extends React.Component {
   }  
 }
 
-export default createStackNavigator({
+const MainStack = StackNavigator({
   Home: {
-    screen: App,
+    screen: HomeScreen,
   },
   Details: {
     screen: DetailsScreen,
@@ -95,3 +117,24 @@ export default createStackNavigator({
       },
     },
 });
+
+const RootStack = StackNavigator(
+  {
+    Main: {
+      screen: MainStack,
+    },
+    MyModal: {
+      screen: ModalScreen,
+    },
+  },
+  {
+    mode: 'modal',
+    headerMode: 'none',
+  }
+);
+
+export default class App extends React.Component {
+  render() {
+    return <RootStack />;
+  }
+}
