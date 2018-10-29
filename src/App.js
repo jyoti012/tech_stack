@@ -7,7 +7,12 @@ class App extends React.Component {
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
         <Text>Home Screen</Text>
-        <TouchableOpacity onPress={() => { this.props.navigation.push('Details') }} >
+        <TouchableOpacity onPress={() => { this.props.navigation.push('Details', 
+          {
+            itemId: Math.floor(Math.random() * 100),
+            otherParam: 'Lorem Ipsum',
+          }) 
+        }} >
             <Text style={{ 
               borderWidth: 1, 
               height: 50, 
@@ -24,9 +29,16 @@ class App extends React.Component {
 
 class DetailsScreen extends React.Component {
   render() {
+    const { navigation } = this.props;
+    const itemId = navigation.getParam('itemId', 'No-ID');
+    const otherParam = navigation.getParam('otherParam', 'Dummy data');
+    console.log(this.props.navigation.state.params)
+
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
         <Text>Details Screen</Text>
+        <Text>itemId: {JSON.stringify(itemId)}</Text>
+        <Text>otherParam: {JSON.stringify(otherParam)}</Text>
           <TouchableOpacity
             onPress={() => { this.props.navigation.navigate('Home') }}>
             <Text style={{ 
