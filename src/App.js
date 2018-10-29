@@ -1,20 +1,55 @@
 import React from 'react';
-import { View } from 'react-native';
-import { Provider } from 'react-redux';
-import { createStore } from 'redux';
-import reducers from './reducers';
-import { Header } from './components/common';
-import LibraryList from './components/LibraryList';
+import { View, Text, TouchableOpacity } from 'react-native';
+import { createStackNavigator, StackActions, NavigationActions } from 'react-navigation'; // Version can be specified in package.json
 
-const App = () => {
-	return(
-		<Provider store={createStore(reducers)}>
-			<View style={{ flex: 1 }}>
-				<Header headerText="Tech Stack"/>
-				<LibraryList />
-			</View>
-		</Provider>
-	);
-};
+class App extends React.Component {
+  render() {
+    return (
+      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+        <Text>Home Screen</Text>
+        <TouchableOpacity onPress={() => { this.props.navigation.push('Details') }} >
+            <Text style={{ 
+              borderWidth: 1, 
+              height: 50, 
+              width: 100,
+              paddingTop: 18, 
+              textAlign: 'center' }}>
+              Go to Details
+            </Text>
+        </TouchableOpacity>
+      </View>
+    );
+  }  
+}
 
-export default App;
+class DetailsScreen extends React.Component {
+  render() {
+    return (
+      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+        <Text>Details Screen</Text>
+          <TouchableOpacity
+            onPress={() => { this.props.navigation.navigate('Home') }}>
+            <Text style={{ 
+              borderWidth: 1, 
+              height: 50, 
+              width: 100,
+              paddingTop: 18, 
+              textAlign: 'center' }}>
+              Go to Home
+            </Text>
+          </TouchableOpacity>
+      </View>
+    );
+  }  
+}
+
+export default createStackNavigator({
+  Home: {
+    screen: App,
+  },
+  Details: {
+    screen: DetailsScreen,
+  },
+}, {
+    initialRouteName: 'Home',
+});

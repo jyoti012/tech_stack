@@ -1,0 +1,15 @@
+createStackNavigator is a function that returns a React component. It takes a route configuration object and, optionally, an options object.
+
+The keys in the route configuration object are the route names and the values are the configuration for that route. The only required property on the configuration is the screen (the component to use for the route).
+
+To specify what the initial route in a stack is, provide an initialRouteName on the stack options object.
+
+- this.props.navigation: the navigation prop is passed in to every screen component (definition) in stack navigator (more about this later in "The navigation prop in depth").
+
+- navigate('Details'): we call the navigate function (on the navigation prop — naming is hard!) with the name of the route that we'd like to move the user to.
+
+The navigation prop is available to all screen components (components defined as screens in route configuration and rendered by React Navigation as a route).
+
+push: we add a new route to the navigation stack. When you call navigate it first tries to find an existing route with that name, and only pushes a new route if there isn't yet one on the stack.
+
+The header provided by stack navigator will automatically include a back button when it is possible to go back from the active screen
